@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+  font-family: "poppins", sans-serif;
+}
+
+@theme {
+  --color-denim-50:  #f3f6fc;
+  --color-denim-100: #e5edf9;
+  --color-denim-200: #c5d9f2;
+  --color-denim-300: #92bae7;
+  --color-denim-400: #5897d8;
+  --color-denim-500: #337ac4;
+  --color-denim-600: #2462ab;
+  --color-denim-700: #1d4c87;
+  --color-denim-800: #1c4270;
+  --color-denim-900: #1c395e;
+  --color-denim-950: #1c395e;
+}

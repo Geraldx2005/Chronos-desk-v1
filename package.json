@@ -1,0 +1,33 @@
+{
+  "name": "eureka-forbes",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "build/main.js",
+  "scripts": {
+    "build:renderer": "cd renderer && npm install && npm run build",
+    "bundle:main": "esbuild electron/main.js --bundle --platform=node --format=esm --outfile=build/main.js --minify --external:electron",
+    "bundle:preload": "esbuild electron/preload.js --bundle --platform=node --format=esm --outfile=build/preload.js --minify --external:electron",
+    "build": "npm run build:renderer && npm run bundle:main && npm run bundle:preload",
+    "dist": "npm run build && electron-builder --win --x64"
+  },
+  "dependencies": {
+    "electron": "^32.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.21.0",
+    "electron-builder": "^24.0.0"
+  },
+  "build": {
+    "appId": "com.eureka-forbes.myapp",
+    "asar": true,
+    "compression": "maximum",
+    "files": [
+      "build/**",
+      "renderer/dist/**",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis"
+    }
+  }
+}
