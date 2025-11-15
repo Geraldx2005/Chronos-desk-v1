@@ -38,18 +38,3 @@ A modern, fast, and production-ready **desktop application** built using:
 | Language | JavaScript (ESM + CJS) |
 
 ---
-
-## Folder Structure
-Eureka-Forbes-Coupons-Generator/
-│
-├── build/ # Bundled main.js + preload.cjs (auto-generated)
-├── electron/ # Source: main.js + preload.cjs
-├── renderer/ # React (Vite) frontend code
-│ ├── src/
-│ └── dist/ # Vite build output
-│
-├── assets/ # App icons (.ico + .png)
-├── release/ # Final installer (.exe) output
-├── package.json
-├── README.md
-└── .gitignore
