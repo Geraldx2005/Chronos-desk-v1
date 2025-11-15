@@ -20,7 +20,7 @@ export default function App() {
     // });
 
     window.electronAPI.onDownloadComplete(() => {
-      toast.success(`Download Successful!`, {
+      toast.success(`Saved Successfully!`, {
         id: "download", // replaces the previous loading toast
       });
     });

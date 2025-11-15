@@ -11,6 +11,7 @@ import { addTrimMarksToPDF } from "./TrimMarksPDFLib";
 import montserratLight from "@fontsource/montserrat/files/montserrat-latin-300-normal.woff";
 import montserratRegular from "@fontsource/montserrat/files/montserrat-latin-400-normal.woff";
 import montserratSemiBold from "@fontsource/montserrat/files/montserrat-latin-600-normal.woff";
+import montserratSemiBoldItalic from "@fontsource/montserrat/files/montserrat-latin-600-italic.woff";
 import montserratBold from "@fontsource/montserrat/files/montserrat-latin-700-normal.woff";
 
 // Register Montserrat font with React PDF - only once
@@ -30,6 +31,11 @@ if (!fontsRegistered) {
       {
         src: montserratSemiBold,
         fontWeight: 600, // Semi-bold
+      },
+      {
+        src: montserratSemiBoldItalic,
+        fontWeight: 600, // Semi-bold Italic
+        fontStyle: "italic",
       },
       {
         src: montserratBold,
@@ -93,6 +99,7 @@ const CouponItem = ({ coupon, qrCode }) => (
       borderTopWidth: 0,
       borderBottomWidth: 0,
       borderColor: "#000",
+      display: "flex",
     }}
   >
     <Image src={TopLine} style={{ width: 119.07, position: "absolute", top: 0 }} />
@@ -102,8 +109,8 @@ const CouponItem = ({ coupon, qrCode }) => (
       style={{
         fontFamily: "Montserrat",
         fontWeight: 600,
-        fontSize: 6,
-        marginBottom: 6,
+        fontSize: 6.3,
+        marginBottom: 4,
         textAlign: "left",
         width: "100%",
       }}
@@ -123,7 +130,7 @@ const CouponItem = ({ coupon, qrCode }) => (
         <Image
           src={qrCode}
           style={{
-            width: "94%",
+            width: "92%",
             margin: 0,
             padding: 0,
           }}
@@ -134,11 +141,11 @@ const CouponItem = ({ coupon, qrCode }) => (
         wrap={false}
         style={{
           fontFamily: "Montserrat",
-          fontWeight: 300,
-          fontSize: 4.5,
+          fontWeight: 600,
+          fontSize: 5,
           position: "absolute",
           textAlign: "center",
-          left: "55.5%",
+          left: "54.5%",
           transform: "rotate(-90deg)",
           width: 94,
         }}
@@ -147,54 +154,82 @@ const CouponItem = ({ coupon, qrCode }) => (
       </Text>
     </View>
 
-    <Text
-      style={{
-        fontFamily: "Montserrat",
-        fontWeight: 300,
-        fontSize: 4.5,
-        marginTop: 4,
-        textAlign: "left",
-        width: "100%",
-      }}
-    >
-      *For Internal use only
-    </Text>
-
     <View
       style={{
         width: "100%",
         flexDirection: "row",
         alignItems: "flex-start",
         justifyContent: "center",
-        marginTop: 2,
-        gap: 5,
+        marginTop: 4,
+        // gap: 2,
+        flex: 1,
+        // backgroundColor: "blue",
       }}
     >
-      <Image src={staticQr} style={{ width: "50%" }} />
       <View
         style={{
           width: "50%",
+          height: "100%",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          // backgroundColor: "teal",
+          paddingRight: 5,
+          // padding: 2,
+          gap: 1,
+        }}
+      >
+        <Text
+          style={{
+            fontFamily: "Montserrat",
+            fontWeight: 600,
+            fontSize: 4.4,
+          }}
+        >
+          *For Internal use only
+        </Text>
+
+        <Image src={staticQr} style={{ width: "100%" }} />
+      </View>
+      <View
+        style={{
+          width: "50%",
+          height: "100%",
+          paddingLeft: 4,
           flexDirection: "column",
           alignItems: "flex-start",
-          justifyContent: "center",
+          justifyContent: "space-between",
+          // backgroundColor: "red",
         }}
       >
         <Text style={{ fontFamily: "Montserrat", fontWeight: 700, fontSize: 4.5 }}>
-          <Text style={{ fontFamily: "Montserrat", fontWeight: 400, fontSize: 4.5 }}>Sku Code: </Text>
+          <Text style={{ fontFamily: "Montserrat", fontWeight: 600, fontStyle: "italic", fontSize: 4.5 }}>SKU Code</Text>
           {"\n"}
-          <Text>{coupon?.["SKU Code"] || "NA"}</Text>
+          <Text>
+            {(coupon?.["Product Code"] || "").slice(0, 8)}
+            {"\n"}
+            {(coupon?.["Product Code"] || "").slice(8)}
+          </Text>
         </Text>
 
         <Text style={{ fontFamily: "Montserrat", fontWeight: 700, fontSize: 4.5 }}>
-          <Text style={{ fontFamily: "Montserrat", fontWeight: 400, fontSize: 4.5 }}>Sku Name: </Text>
+          <Text style={{ fontFamily: "Montserrat", fontWeight: 600, fontStyle: "italic", fontSize: 4.5 }}>SKU Name</Text>
           {"\n"}
-          <Text>{coupon?.["SKU Name"] || "NA"}</Text>
+          <Text>
+            {(coupon?.["Product Description"] || "").slice(0, 12)}
+            {"\n"}
+            {(coupon?.["Product Description"] || "").slice(13)}
+          </Text>
         </Text>
 
         <Text style={{ fontFamily: "Montserrat", fontWeight: 700, fontSize: 4.5 }}>
-          <Text style={{ fontFamily: "Montserrat", fontWeight: 400, fontSize: 4.5 }}>Internal Code: </Text>
+          <Text style={{ fontFamily: "Montserrat", fontWeight: 600, fontStyle: "italic", fontSize: 4.5 }}>Internal Code</Text>
           {"\n"}
-          <Text>{coupon?.["Internal Code"] || "NA"}</Text>
+          <Text>
+            {(coupon?.["Internal Code"] || "").slice(0, 13)}
+            {"\n"}
+            {(coupon?.["Internal Code"] || "").slice(13)}
+          </Text>
         </Text>
       </View>
     </View>
@@ -297,7 +332,7 @@ export default function GeneratePDF({ coupons }) {
 
     setTimeout(() => URL.revokeObjectURL(blobURL), 5000);
   };
-  
+
   if (!isReady || qrList.length !== coupons.length) {
     return <LoadingSpinner message="Generating QR..." />;
   }
